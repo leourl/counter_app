@@ -36,14 +36,11 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        body: new Container(
+        body: Container(
           color: Colors.grey[200],
           child: ListView(
             children: [
-              Contagem(),
-              Contagem(),
-              Contagem(),
-              Contagem(),
+              ItemContagem(Contagem('teste', 0026)),
             ],
           ),
         ),
@@ -52,10 +49,10 @@ class Home extends StatelessWidget {
   }
 }
 
-class Contagem extends StatelessWidget {
-  const Contagem({
-    Key key,
-  }) : super(key: key);
+class ItemContagem extends StatelessWidget {
+  final Contagem _contagem;
+
+  ItemContagem(this._contagem);
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +66,14 @@ class Contagem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Nome Transferencia",
+                  _contagem.nome,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black87,
                   ),
                 ),
                 Text(
-                  "0026",
+                  _contagem.valor.toString(),
                   style: TextStyle(
                     fontSize: 52,
                     color: Colors.black87,
@@ -111,4 +108,11 @@ class Contagem extends StatelessWidget {
       ),
     );
   }
+}
+
+class Contagem {
+  final String nome;
+  final int valor;
+
+  Contagem(this.nome, this.valor);
 }
