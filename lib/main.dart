@@ -1,4 +1,6 @@
+import 'package:counter_app/contagens.dart';
 import 'package:flutter/material.dart';
+import 'contagens.dart';
 
 void main() {
   runApp(Home());
@@ -36,67 +38,73 @@ class Home extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            Card(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Nome_Contagem",
-                            ),
-                            Text("0026",
-                                style: TextStyle(
-                                    fontSize: 56, color: Colors.black87))
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 30, top: 5),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 45),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.remove,
-                                  size: 62,
-                                  color: Colors.blueAccent,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.add,
-                                  size: 62,
-                                  color: Colors.blueAccent,
-                                ),
-                                onPressed: () {},
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
+            Contagem(),
+            Contagem(),
+            Contagem(),
+            Contagem(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Contagem extends StatelessWidget {
+  const Contagem({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Nome Transferencia",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+                Text(
+                  "0026",
+                  style: TextStyle(
+                    fontSize: 52,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 30.0),
+                child: IconButton(
+                  color: Colors.blueAccent,
+                  iconSize: 48,
+                  icon: Icon(Icons.remove),
+                  onPressed: () {},
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: IconButton(
+                  color: Colors.blueAccent,
+                  iconSize: 48,
+                  icon: Icon(Icons.add),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
