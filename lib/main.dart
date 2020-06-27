@@ -36,13 +36,16 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        body: ListView(
-          children: [
-            Contagem(),
-            Contagem(),
-            Contagem(),
-            Contagem(),
-          ],
+        body: new Container(
+          color: Colors.grey[200],
+          child: ListView(
+            children: [
+              Contagem(),
+              Contagem(),
+              Contagem(),
+              Contagem(),
+            ],
+          ),
         ),
       ),
     );
