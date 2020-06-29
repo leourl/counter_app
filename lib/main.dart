@@ -52,7 +52,7 @@ class TelaContagem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "0026",
+                  "valor",
                   style: TextStyle(
                     fontSize: 120,
                     fontWeight: FontWeight.w300,
@@ -111,7 +111,9 @@ class TelaContagem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // debugPrint('mais um');
+                        },
                         iconSize: 350,
                         icon: Icon(
                           Icons.add_circle,
