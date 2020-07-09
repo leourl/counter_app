@@ -1,3 +1,4 @@
+import 'package:counter_app/database/counters.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,10 @@ class AppBarHome extends AppBarCounter {
                 color: Colors.blue[300],
                 size: 42,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                print(await getCounters());
+
+              },
             ),
           ],
         );
