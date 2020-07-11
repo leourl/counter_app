@@ -1,3 +1,4 @@
+import 'package:counter_app/screens/counter.dart';
 import 'package:counter_app/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,8 @@ class CounterAPP extends StatelessWidget {
         initialRoute: '/splash',
         routes: {
           '/splash': (BuildContext context) => SplashScreen(),
-          '/home': (BuildContext context) => Home()
+          '/home': (BuildContext context) => HomeScreen(),
+          '/counter': (BuildContext context) => CounterScreen()
         },
         debugShowCheckedModeBanner: false
       );

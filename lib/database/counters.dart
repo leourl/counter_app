@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 final String createCountersScript =
-    "CREATE TABLE counters(id INTEGER PRIMARY KEY, name TEXT, value INT, active INT)";
+    "CREATE TABLE counters(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, value INT, active INT)";
 
 Future<Database> checkCountersDB() async {
   return openDatabase(
@@ -14,12 +14,12 @@ Future<Database> checkCountersDB() async {
         _defaultData(),
       );
     },
-    version: 1,
+    version: 2,
   );
 }
 
 Map<String, dynamic> _defaultData() {
-  return {'id': 1, 'name': 'PrimeiroContador', 'value': 0, 'active': 1};
+  return {'name': 'Novo Contador', 'value': 0, 'active': 1};
 }
 
 Future<List<Map<String, dynamic>>> getCounters() async {
@@ -33,13 +33,60 @@ Future<List<Map<String, dynamic>>> getCounters() async {
   return result;
 }
 
+Future<List<Map<String, dynamic>>> getCountersByID(int id) async {
+  final Database db = await checkCountersDB();
+  final List<Map<String, dynamic>> result = await db.query(
+    'counters',
+    where: 'id = ?',
+    whereArgs: [id],
+    limit: 1,
+    columns: ['id', 'name', 'value'],
+  );
+
+  return result;
+}
+
 void updateCounter({int valor, int id}) async {
   final Database db = await checkCountersDB();
 
   await db.update(
     'counters',
-    {'value' : valor},
+    {'value': valor},
     where: "id = ?",
     whereArgs: [id],
   );
+}
+
+void updateCounterName({String name, int id}) async {
+  final Database db = await checkCountersDB();
+
+  await db.update(
+    'counters',
+    {'name': name},
+    where: "id = ?",
+    whereArgs: [id],
+  );
+}
+
+void deleteCounters({int id}) async {
+  final Database db = await checkCountersDB();
+  await db.delete('counters', where: 'id < 432 and id > 1');
+
+
+}
+
+Future<List<Map<String, dynamic>>> setNewCounter() async {
+  final Database db = await checkCountersDB();
+  await db.insert(
+    'counters',
+    _defaultData(),
+  );
+  final List<Map<String, dynamic>> result = await db.query(
+    'counters',
+    columns: ['id', 'name', 'value'],
+    limit: 1,
+    orderBy: 'id desc',
+  );
+
+  return result;
 }

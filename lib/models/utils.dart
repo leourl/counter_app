@@ -43,3 +43,15 @@ class CenteredMessage extends StatelessWidget {
     );
   }
 }
+
+String ajustaValor(int valor) {
+  if (valor.toString().length == 1) {
+    return '000' + valor.toString();
+  } else if (valor.toString().length == 2) {
+    return '00' + valor.toString();
+  } else if (valor.toString().length == 3) {
+    return '0' + valor.toString();
+  } else {
+    return valor.toString();
+  }
+}
