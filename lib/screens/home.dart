@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarHomeScreen(context: context),
-      drawer: Menu(),
+      // drawer: Menu(),
       body: _homeCards(),
     );
   }
@@ -68,31 +68,45 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _counterCard({String nomeContagem, int valorContagem, int counterID}) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/counter', arguments: {'id': counterID}).then((value) => fetchData());
+        Navigator.pushNamed(context, '/counter', arguments: {'id': counterID})
+            .then((value) => fetchData());
       },
-      
-      child: Card(
-        child: ListTile(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              nomeContagem,
-              style: TextStyle(color: Colors.black54),
-            ),
+      child: Dismissible(
+        background: Container(
+          padding: const EdgeInsets.only(left: 16),
+          alignment: Alignment.centerLeft,
+          color: Colors.red[600],
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+            size: 40,
           ),
-          subtitle: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                ajustaValor(valorContagem),
-                style: TextStyle(fontSize: 56, fontFamily: 'Roboto'),
+        ),
+        key: Key(counterID.toString()),
+        onDismissed: (direction) {},
+        child: Card(
+          child: ListTile(
+            title: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                nomeContagem,
+                style: TextStyle(color: Colors.black54),
               ),
-              Spacer(),
-              _counterCardIcons(
-                counterID: counterID,
-                valorContagem: valorContagem,
-              ),
-            ],
+            ),
+            subtitle: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  ajustaValor(valorContagem),
+                  style: TextStyle(fontSize: 56, fontFamily: 'Roboto'),
+                ),
+                Spacer(),
+                _counterCardIcons(
+                  counterID: counterID,
+                  valorContagem: valorContagem,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -106,11 +120,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         children: [
           IconButton(
-            padding: EdgeInsets.only(bottom: 40, right: 25),
+            padding: EdgeInsets.only(bottom: 40, right: 40),
             color: Colors.blue[300],
             icon: Icon(
               Icons.remove,
-              size: 56,
+              size: 60,
             ),
             onPressed: () {
               if (valorContagem > 0) {
@@ -124,11 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           VerticalDivider(),
           IconButton(
-            padding: EdgeInsets.only(bottom: 40, right: 25),
+            padding: EdgeInsets.only(bottom: 40, right: 35),
             color: Colors.blue[300],
             icon: Icon(
               Icons.add,
-              size: 56,
+              size: 60,
             ),
             onPressed: () {
               updateCounter(

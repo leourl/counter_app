@@ -37,14 +37,11 @@ class _CounterScreenState extends State<CounterScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     try {
       if (data[0]['id'] > 0) {
         return Scaffold(
-            appBar: AppBarCounterScreen(
-              counterID: data[0]['id'],
-              context: context
-            ),
+            appBar:
+                AppBarCounterScreen(counterID: data[0]['id'], context: context),
             body: _body());
       } else {
         return Scaffold(
@@ -65,15 +62,18 @@ class _CounterScreenState extends State<CounterScreen> {
   }
 
   _body() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _counterValue(value: data[0]['value']),
-          _shareCounter(),
-          _counterIcons(counterID: data[0]['id'] , valorContagem: data[0]['value'] ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _counterValue(value: data[0]['value']),
+            // _shareCounter(),
+            _counterIcons(
+                counterID: data[0]['id'], valorContagem: data[0]['value']),
+          ],
+        ),
       ),
     );
   }
@@ -124,46 +124,54 @@ class _CounterScreenState extends State<CounterScreen> {
   Widget _counterIcons({int counterID, int valorContagem}) {
     return Stack(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: () {
-                if (valorContagem > 0) {
-                  updateCounter(
-                    valor: valorContagem - 1,
-                    id: counterID,
-                  );
-                  fetchData({'id': counterID});
-                }
-              },
-              iconSize: 100,
-              icon: Icon(
-                Icons.remove_circle,
-                color: Colors.blue,
+        Container(
+          margin: const EdgeInsets.only(top: 20),
+          alignment: Alignment.topRight,
+          child: GestureDetector(
+            onTap: () {
+              if (valorContagem > 0) {
+                updateCounter(
+                  valor: valorContagem - 1,
+                  id: counterID,
+                );
+                fetchData({'id': counterID});
+              }
+            },
+            child: ClipOval(
+              child: Container(
+                child: Icon(
+                  Icons.remove_circle,
+                  size: 110,
+                  color: Colors.lightBlue,
+                ),
               ),
             ),
-          ],
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 40.0),
+          padding: const EdgeInsets.only(top: 60),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   updateCounter(
                     valor: valorContagem + 1,
                     id: counterID,
                   );
                   fetchData({'id': counterID});
                 },
-                iconSize: 350,
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.blue,
+                child: ClipOval(
+                  child: Container(
+                    // color: Colors.green,
+                    child: Icon(
+                      Icons.add_circle,
+                      size: 360,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),

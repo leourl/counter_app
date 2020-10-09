@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 AppBar appBarHomeScreen({@required BuildContext context}) {
   return AppBar(
-    iconTheme: IconThemeData(color: Colors.black87),
+    // iconTheme: IconThemeData(color: Colors.black87),
     backgroundColor: Colors.white,
     centerTitle: true,
     title: Text(
