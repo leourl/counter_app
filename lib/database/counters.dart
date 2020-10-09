@@ -70,9 +70,26 @@ void updateCounterName({String name, int id}) async {
 
 void deleteCounters({int id}) async {
   final Database db = await checkCountersDB();
-  await db.delete('counters', where: 'id < 432 and id > 1');
+  await db.update(
+    'counters',
+    {'active': 0},
+    where: "id = ?",
+    whereArgs: [id],
+  );
 
+  // await db.delete('counters', where: 'id = $id');
+}
 
+void recoverCounters({int id}) async {
+  final Database db = await checkCountersDB();
+  await db.update(
+    'counters',
+    {'active': 1},
+    where: "id = ?",
+    whereArgs: [id],
+  );
+
+  // await db.delete('counters', where: 'id = $id');
 }
 
 Future<List<Map<String, dynamic>>> setNewCounter() async {

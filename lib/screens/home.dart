@@ -1,6 +1,6 @@
 import 'package:counter_app/database/counters.dart';
 import 'package:counter_app/models/appbar.dart';
-import 'package:counter_app/models/menu.dart';
+// import 'package:counter_app/models/menu.dart';
 import 'package:counter_app/models/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> data;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void fetchData() async {
     var _data = await getCounters();
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarHomeScreen(context: context),
+      key: _scaffoldKey,
       // drawer: Menu(),
       body: _homeCards(),
     );
@@ -85,23 +87,26 @@ class _HomeScreenState extends State<HomeScreen> {
             onDismissed: (actionType) {
               if (actionType == SlideActionType.secondary) {
                 deleteCounters(id: counterID);
+                deletedItemSnackBar(
+                    counterId: counterID, counterName: nomeContagem);
               }
               fetchData();
             }),
         secondaryActions: <Widget>[
-          _deleteCounterCardIcon(id: counterID),
+          _deleteCounterCardIcon(counterName: nomeContagem, id: counterID),
         ],
       ),
     );
   }
 
-  Widget _deleteCounterCardIcon({int id}) {
+  Widget _deleteCounterCardIcon({String counterName, int id}) {
     return IconSlideAction(
         caption: 'Remove',
         color: Colors.red[600],
         icon: Icons.delete,
         onTap: () {
           deleteCounters(id: id);
+          deletedItemSnackBar(counterId: id, counterName: counterName);
           fetchData();
         });
   }
@@ -175,6 +180,21 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  void deletedItemSnackBar({String counterName, int counterId}) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text('$counterName removido'),
+        action: SnackBarAction(
+          label: 'Desfazer',
+          onPressed: () {
+            recoverCounters(id: counterId);
+            fetchData();
+          },
+        ),
       ),
     );
   }
