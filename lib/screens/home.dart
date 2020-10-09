@@ -4,6 +4,7 @@ import 'package:counter_app/models/menu.dart';
 import 'package:counter_app/models/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -71,43 +72,64 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.pushNamed(context, '/counter', arguments: {'id': counterID})
             .then((value) => fetchData());
       },
-      child: Dismissible(
-        background: Container(
-          padding: const EdgeInsets.only(left: 16),
-          alignment: Alignment.centerLeft,
-          color: Colors.red[600],
-          child: Icon(
-            Icons.delete,
-            color: Colors.white,
-            size: 40,
+      child: Slidable(
+        key: Key(counterID.toString()),
+        actionPane: SlidableDrawerActionPane(),
+        actionExtentRatio: 0.25,
+        child: _counterCardData(
+            nomeContagem: nomeContagem,
+            valorContagem: valorContagem,
+            counterID: counterID),
+        dismissal: SlidableDismissal(
+            child: SlidableDrawerDismissal(),
+            onDismissed: (actionType) {
+              if (actionType == SlideActionType.secondary) {
+                deleteCounters(id: counterID);
+              }
+              fetchData();
+            }),
+        secondaryActions: <Widget>[
+          _deleteCounterCardIcon(id: counterID),
+        ],
+      ),
+    );
+  }
+
+  Widget _deleteCounterCardIcon({int id}) {
+    return IconSlideAction(
+        caption: 'Remove',
+        color: Colors.red[600],
+        icon: Icons.delete,
+        onTap: () {
+          deleteCounters(id: id);
+          fetchData();
+        });
+  }
+
+  Widget _counterCardData(
+      {String nomeContagem, int valorContagem, int counterID}) {
+    return Card(
+      child: ListTile(
+        title: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            nomeContagem,
+            style: TextStyle(color: Colors.black54),
           ),
         ),
-        key: Key(counterID.toString()),
-        onDismissed: (direction) {},
-        child: Card(
-          child: ListTile(
-            title: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                nomeContagem,
-                style: TextStyle(color: Colors.black54),
-              ),
+        subtitle: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              ajustaValor(valorContagem),
+              style: TextStyle(fontSize: 56, fontFamily: 'Roboto'),
             ),
-            subtitle: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  ajustaValor(valorContagem),
-                  style: TextStyle(fontSize: 56, fontFamily: 'Roboto'),
-                ),
-                Spacer(),
-                _counterCardIcons(
-                  counterID: counterID,
-                  valorContagem: valorContagem,
-                ),
-              ],
+            Spacer(),
+            _counterCardIcons(
+              counterID: counterID,
+              valorContagem: valorContagem,
             ),
-          ),
+          ],
         ),
       ),
     );

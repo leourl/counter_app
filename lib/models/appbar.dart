@@ -21,7 +21,8 @@ AppBar appBarHomeScreen({@required BuildContext context}) {
           size: 42,
         ),
         onPressed: () {
-          Navigator.pushNamed(context, '/counter', arguments: {'id': 0}).then((value) => Navigator.pushReplacementNamed(context, '/home'));
+          Navigator.pushNamed(context, '/counter', arguments: {'id': 0}).then(
+              (value) => Navigator.pushReplacementNamed(context, '/home'));
         },
       ),
     ],
@@ -101,7 +102,7 @@ class _AppBarCounterScreenState extends State<AppBarCounterScreen> {
       context: context,
       child: AlertDialog(
           title: Text('Atenção!'),
-          content: Text('Por favor, insira um email válido.'),
+          content: Text('Por favor, insira nome para o contador.'),
           actions: [
             FlatButton(
                 child: Text("OK"),
@@ -146,82 +147,4 @@ class _AppBarCounterScreenState extends State<AppBarCounterScreen> {
           );
         });
   }
-}
-
-AppBar appBarCounterScreen(
-    {@required BuildContext context,
-    @required String pageTitle,
-    @required int counterID}) {
-  final TextEditingController _countername = TextEditingController();
-
-  _errorAlert() {
-    return showDialog(
-      context: context,
-      child: AlertDialog(
-          title: Text('Atenção!'),
-          content: Text('Por favor, insira um email válido.'),
-          actions: [
-            FlatButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ]),
-    );
-  }
-
-  _editCounterName() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Por favor digite um nome para o contador"),
-            content: TextField(
-              decoration: InputDecoration(hintText: 'Meu Contador'),
-              controller: _countername,
-            ),
-            actions: [
-              FlatButton(
-                child: Text("Salvar"),
-                onPressed: () {
-                  if (_countername.text.isEmpty) {
-                    _errorAlert();
-                  } else {
-                    updateCounterName(name: _countername.text, id: counterID);
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-              FlatButton(
-                child: Text("Cancelar"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          );
-        });
-  }
-
-  return AppBar(
-    iconTheme: IconThemeData(color: Colors.black87),
-    backgroundColor: Colors.white,
-    centerTitle: true,
-    title: Text(
-      pageTitle,
-      style: TextStyle(color: Colors.black87),
-    ),
-    actions: [
-      IconButton(
-        padding: EdgeInsets.only(right: 15),
-        color: Colors.black87,
-        icon: Icon(
-          Icons.edit,
-        ),
-        onPressed: () {
-          _editCounterName();
-        },
-      ),
-    ],
-  );
 }
