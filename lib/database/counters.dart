@@ -1,3 +1,4 @@
+import 'package:counter_app/models/languages.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -19,7 +20,7 @@ Future<Database> checkCountersDB() async {
 }
 
 Map<String, dynamic> _defaultData() {
-  return {'name': 'Novo Contador', 'value': 0, 'active': 1};
+  return {'name': appText.counterDefaultName, 'value': 0, 'active': 1};
 }
 
 Future<List<Map<String, dynamic>>> getCounters() async {
@@ -76,8 +77,6 @@ void deleteCounters({int id}) async {
     where: "id = ?",
     whereArgs: [id],
   );
-
-  // await db.delete('counters', where: 'id = $id');
 }
 
 void recoverCounters({int id}) async {
@@ -88,8 +87,6 @@ void recoverCounters({int id}) async {
     where: "id = ?",
     whereArgs: [id],
   );
-
-  // await db.delete('counters', where: 'id = $id');
 }
 
 Future<List<Map<String, dynamic>>> setNewCounter() async {

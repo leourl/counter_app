@@ -1,4 +1,5 @@
 import 'package:counter_app/database/counters.dart';
+import 'package:counter_app/models/languages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ AppBar appBarHomeScreen({@required BuildContext context}) {
     backgroundColor: Colors.white,
     centerTitle: true,
     title: Text(
-      'Contagens',
+      appText.listTitle,
       style: TextStyle(color: Colors.black87),
     ),
     actions: [
@@ -101,8 +102,8 @@ class _AppBarCounterScreenState extends State<AppBarCounterScreen> {
     return showDialog(
       context: context,
       child: AlertDialog(
-          title: Text('Atenção!'),
-          content: Text('Por favor, insira nome para o contador.'),
+          title: Text(appText.editNameErrorName),
+          content: Text(appText.editNameErrorText),
           actions: [
             FlatButton(
                 child: Text("OK"),
@@ -118,14 +119,14 @@ class _AppBarCounterScreenState extends State<AppBarCounterScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Por favor digite um nome para o contador"),
+            title: Text(appText.editNameText),
             content: TextField(
-              decoration: InputDecoration(hintText: 'Meu Contador'),
+              decoration: InputDecoration(hintText: appText.counterDefaultName),
               controller: _countername,
             ),
             actions: [
               FlatButton(
-                child: Text("Salvar"),
+                child: Text(appText.save),
                 onPressed: () {
                   if (_countername.text.isEmpty) {
                     _errorAlert();
@@ -138,7 +139,7 @@ class _AppBarCounterScreenState extends State<AppBarCounterScreen> {
                 },
               ),
               FlatButton(
-                child: Text("Cancelar"),
+                child: Text(appText.cancel),
                 onPressed: () {
                   Navigator.pop(context);
                 },

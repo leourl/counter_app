@@ -1,5 +1,6 @@
 import 'package:counter_app/database/counters.dart';
 import 'package:counter_app/models/appbar.dart';
+import 'package:counter_app/models/languages.dart';
 // import 'package:counter_app/models/menu.dart';
 import 'package:counter_app/models/utils.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _deleteCounterCardIcon({String counterName, int id}) {
     return IconSlideAction(
-        caption: 'Remove',
+        caption: appText.delete,
         color: Colors.red[600],
         icon: Icons.delete,
         onTap: () {
@@ -187,9 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void deletedItemSnackBar({String counterName, int counterId}) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        content: Text('$counterName removido'),
+        content: Text('$counterName ${appText.deleteMsg}'),
         action: SnackBarAction(
-          label: 'Desfazer',
+          label: appText.undo,
           onPressed: () {
             recoverCounters(id: counterId);
             fetchData();
