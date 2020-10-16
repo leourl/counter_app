@@ -1,10 +1,10 @@
 name: counter_app
-description: A new Flutter project.
+description: Contador de coisas.
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/icon.jpg"
+  image_path: "assets/icon/icon.png"
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
