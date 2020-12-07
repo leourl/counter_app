@@ -1,7 +1,6 @@
 import 'package:counter_app/screens/counter.dart';
 import 'package:counter_app/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/home.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
